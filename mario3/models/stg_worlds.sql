@@ -4,4 +4,4 @@ SELECT
     description AS world_descr,
     world
 FROM
-    mario3.world_fact
+    {{ source('mario3', 'world_fact') }}

@@ -6,4 +6,4 @@ SELECT
     occupation_id,
     image
 FROM
-    mario3.character_fact
+    {{ source('mario3', 'character_fact') }}

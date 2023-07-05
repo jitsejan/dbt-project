@@ -81,3 +81,13 @@ models:
         tests:
           - unique
           - not_null
+
+sources:
+  - name: mario3
+    database: postgres
+    schema: raw
+    tables:
+      - name: character_fact
+      - name: event_dim
+      - name: occupation_fact
+      - name: world_fact

@@ -6,4 +6,4 @@ SELECT
     lives,
     time
 FROM 
-    mario3.event_dim
+    {{ source('mario3', 'event_dim') }}

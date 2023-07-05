@@ -33,3 +33,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   mario3:
     +materialized: table
+  
