@@ -1,42 +1,16 @@
 {{ config(materialized='table') }}
 
 WITH characters AS (
-    SELECT
-        id AS char_id,
-        name AS char_name,
-        description AS char_descr,
-        colors,
-        occupation_id,
-        image
-    from
-        mario3.character_fact
+    SELECT * FROM {{ ref('stg_characters') }}
 ),
 worlds AS (
-    SELECT
-        id AS world_id,
-        name AS world_name,
-        description AS world_descr,
-        world
-    FROM
-        mario3.world_fact
+    SELECT * FROM {{ ref('stg_worlds') }}
 ),
 occupations AS (
-    SELECT
-        id AS occ_id,
-        name AS occ_name
-    FROM
-        mario3.occupation_fact
+    SELECT * FROM {{ ref('stg_occupations') }}
 ),
 events AS (
-    SELECT
-        id AS event_id,
-        character_id,
-        world_id,
-        level,
-        lives,
-        time
-    FROM 
-        mario3.event_dim
+    SELECT * FROM {{ ref('stg_events') }}
 ),
 final AS (
     SELECT 
