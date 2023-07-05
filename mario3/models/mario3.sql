@@ -12,20 +12,33 @@ occupations AS (
 events AS (
     SELECT * FROM {{ ref('stg_events') }}
 ),
+character_events AS (
+    SELECT
+        character_id,
+        min(time) AS first_event_date,
+        max(time) AS last_event_date,
+        count(event_id) AS number_of_events
+    FROM
+        characters
+    RIGHT JOIN
+        events
+    USING
+        (character_id)
+    GROUP BY
+        1
+
+),
 final AS (
     SELECT 
-        event_id,
-        char_name,
-        char_descr,
-        occ_name,
-        world_name,
-        level,
-        lives,
-        time
-    FROM events AS e
-        LEFT JOIN characters AS c ON c.char_id = e.character_id
-        LEFT JOIN occupations AS o ON o.occ_id = c.occupation_id
-        LEFT JOIN worlds AS w on w.world_id = e.world_id
+        c.character_name,
+        o.occupation_name,
+        ce.first_event_date,
+        ce.last_event_date,
+        coalesce(ce.number_of_events, 0) as number_of_events
+    FROM characters AS c
+        LEFT JOIN character_events AS ce
+        USING (character_id)
+        LEFT JOIN occupations AS o USING (occupation_id)
 )
 SELECT * 
 FROM final
