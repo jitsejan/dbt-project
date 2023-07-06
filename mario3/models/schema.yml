@@ -73,8 +73,8 @@ models:
   - name: character_events
     description: Aggregated character stg_events
   
-  - name: mario3
-    description: Mario 3 Model
+  - name: event_insights
+    description: Event Insights
     columns:
       - name: event_id
         description: Primary key
