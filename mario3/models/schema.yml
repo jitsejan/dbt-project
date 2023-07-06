@@ -4,16 +4,24 @@ models:
   - name: stg_characters
     description: Character model
     columns:
-      - name: char_id
+      - name: character_id
+        data_type: int
         description: Primary key
         tests:
           - unique
           - not_null
-      - name: char_name
+        tags:
+          - character
+          - primary_key
+      - name: character_name
+        data_type: string
         description: Unique character name
         tests:
           - accepted_values:
               values: ["Mario", "Luigi"]
+        tags:
+          - character
+          - unique_name
       - name: occupation_id
         description: Validate foreign key
         tests:
@@ -70,8 +78,9 @@ models:
                 "World 8",
                 "World 9",
               ]
-  - name: character_events
-    description: Aggregated character stg_events
+  
+  - name: agg_character_events
+    description: Aggregated characte events
   
   - name: event_insights
     description: Event Insights
