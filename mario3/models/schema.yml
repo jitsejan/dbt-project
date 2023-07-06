@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: stg_characters
+    description: Character model
+    columns:
+      - name: character_id
+        data_type: int
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+        tags:
+          - character
+          - primary_key
+      - name: character_name
+        data_type: string
+        description: Unique character name
+        tests:
+          - accepted_values:
+              values: ["Mario", "Luigi"]
+        tags:
+          - character
+          - unique_name
+      - name: occupation_id
+        description: Validate foreign key
+        tests:
+          - relationships:
+              to: ref('stg_occupations')
+              field: occ_id
+
+  - name: stg_events
+    description: Event model
+    columns:
+      - name: event_id
+        description: Primary key 
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_occupations
+    description: Occupation model
+    columns:
+      - name: occ_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: occ_name
+        description: Validate the occupation
+        tests:
+          - accepted_values:
+              values: ["plumber"]
+
+  - name: stg_worlds
+    description: World model
+    columns:
+      - name: world_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: world_name
+        tests:
+          - unique
+          - not_null
+      - name: world
+        tests:
+          - accepted_values:
+              values: [
+                "World 1", 
+                "World 2", 
+                "World 3", 
+                "World 4",
+                "World 5",
+                "World 6",
+                "World 7",
+                "World 8",
+                "World 9",
+              ]
+  
+  - name: agg_character_events
+    description: Aggregated characte events
+  
+  - name: event_insights
+    description: Event Insights
+    columns:
+      - name: event_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+
+sources:
+  - name: mario3
+    database: postgres
+    schema: raw
+    tables:
+      - name: character_fact
+      - name: event_dim
+      - name: occupation_fact
+      - name: world_fact
